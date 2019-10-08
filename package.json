@@ -1,0 +1,25 @@
+{
+  "name": "soajs.example",
+  "description": "soajs example",
+  "version": "2.5.17",
+  "author": {
+    "name": "soajs team",
+    "email": "team@soajs.org"
+  },
+  "repository": {},
+  "license": "Apache-2.0",
+  "engines": {
+    "node": "*"
+  },
+  "scripts": {},
+  "devDependencies": {
+    "soajs.controller": "2.5.*",
+    "soajs.mongodb.data": "2.1.*",
+    "soajs.oauth": "2.5.*",
+    "soajs.urac": "2.5.*"
+  },
+  "dependencies": {
+    "soajs": "2.5.14",
+    "soajs.core.drivers": "3.5.18"
+  }
+}
