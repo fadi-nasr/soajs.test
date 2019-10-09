@@ -19,6 +19,7 @@
     "soajs.urac": "2.5.*"
   },
   "dependencies": {
+    "express": "4.17.1",
     "soajs": "2.5.14",
     "soajs.core.drivers": "3.5.18"
   }
