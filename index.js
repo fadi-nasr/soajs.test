@@ -32,17 +32,50 @@ function startServer(serverConfig, callback) {
     sApp.get('/', (req, res) => res.json(sReply));
     mApp.get('/heartbeat', (req, res) => res.json(mReply));
 
+    sApp.get("/testGet", (req, res) => res.json(sReply));
+
+    sApp.post("/testPost", (req, res) => {
+        let response = {
+            "added": true
+        };
+        return res.json(response);
+    });
+
+    sApp.put("/testPut", (req, res) => {
+        let response = {
+            "updated": true
+        };
+        return res.json(response);
+    });
+
+    sApp.delete("/testDelete", (req, res) => {
+        let response = {
+            "deleted": true
+        };
+        return res.json(response);
+    });
+
     sApp.patch("/testPatch", (req, res) => {
-        return res;
+        let response = {
+            "patched": true
+        };
+        return res.json(response);
     });
 
     sApp.head("/testHead", (req, res) => {
-        return res;
+        let response = {
+            "head": true
+        };
+        return res.json(response);
     });
 
     sApp.options("/testOther", (req, res) => {
-        return res;
+        let response = {
+            "other": true
+        };
+        return res.json(response);
     });
+
 
     let sAppServer = sApp.listen(serverConfig.s.port, () => console.log(`${serverConfig.name} service listening on port ${serverConfig.s.port}!`));
     let mAppServer = mApp.listen(serverConfig.m.port, () => console.log(`${serverConfig.name} service listening on port ${serverConfig.m.port}!`));
@@ -68,42 +101,8 @@ function stopServer(config) {
     });
 }
 
-service.init(function () {
-    let reg = service.registry.get();
+startServer({s: {port: 4010}, m: {port: 5010}, name: "test"},  () => {});
 
-    let dbConfig = reg.coreDB.provision;
-    if (reg.coreDB.oauth) {
-        dbConfig = {
-            "provision": reg.coreDB.provision,
-            "oauth": reg.coreDB.oauth
-        };
-    }
-    provision.init(dbConfig, service.log);
-
-    // startServer({s: {port: 4010}, m: {port: 5010}, name: "test"},  () => {});
-
-    service.get("/testGet", (req, res) => {
-        return res;
-    });
-
-    service.post("/testPost", (req, res) => {
-        return res;
-    });
-
-    service.put("/testPut", (req, res) => {
-        return res;
-    });
-
-    service.delete("/testDelete", (req, res) => {
-        return res;
-    });
-
-    service.put("/testPut", (req, res) => {
-        return res;
-    });
-
-    // service.start();
-});
 
 module.exports = {
     startServer: startServer,

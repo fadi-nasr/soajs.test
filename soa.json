@@ -11,16 +11,16 @@
   "requestTimeout": 30,
   "requestTimeoutRenewal": 5,
   "serviceVersion": "1",
-  "extKeyRequired": true,
-  "urac": true,
+  "extKeyRequired": false,
+  "urac": false,
   "urac_Profile": false,
   "urac_ACL": false,
   "provision_ACL": false,
-  "oauth": true,
+  "oauth": false,
   "maintenance": {
     "port": {
-      "type": "inherit"
+      "type": "maintenance"
     },
-    "readiness": "/testhealth"
+    "readiness": "/heartbeat"
   }
 }
