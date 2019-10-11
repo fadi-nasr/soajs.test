@@ -1,16 +1,23 @@
 'use strict';
-const soajs = require('soajs');
-const config = require('./soa.json');
-config.packagejson = require("./package.json");
-const service = new soajs.server.service(config);
-const coreModules = require("soajs");
-const provision = coreModules.provision;
 const express = require('express');
-
 const sApp = express();
 const mApp = express();
 
 function startServer(serverConfig, callback) {
+	if (!serverConfig) {
+		serverConfig = {}
+	}
+	if (!serverConfig.name) {
+		serverConfig.name = "httpmethods";
+	}
+	if (!serverConfig.s) {
+		serverConfig.s = {};
+		serverConfig.s.port = 4010;
+	}
+	if (!serverConfig.m) {
+		serverConfig.m = {};
+		serverConfig.m.port = 5010;
+	}
     let mReply = {
         'result': true,
         'ts': Date.now(),
@@ -28,52 +35,57 @@ function startServer(serverConfig, callback) {
             'type': "endpoint"
         }
     };
-
-    sApp.get('/', (req, res) => res.json(sReply));
-    mApp.get('/heartbeat', (req, res) => res.json(mReply));
-
-    sApp.get("/testGet", (req, res) => res.json(sReply));
+    
+    mApp.get('/heartbeat', (req, res) => {
+	    mReply.service.route = '/heartbeat';
+	    res.json(mReply)
+    });
+    
+	mApp.get('/wrench', (req, res) => {
+		mReply.service.route = '/wrench';
+		res.json(mReply)
+	});
+	
+    sApp.get("/testGet", (req, res) => {
+	    sReply.data.url = req.url;
+	    sReply.data.method = req.method;
+	    res.json(sReply);
+    });
 
     sApp.post("/testPost", (req, res) => {
-        let response = {
-            "added": true
-        };
-        return res.json(response);
+	    sReply.data.url = req.url;
+	    sReply.data.method = req.method;
+	    res.json(sReply);
     });
 
     sApp.put("/testPut", (req, res) => {
-        let response = {
-            "updated": true
-        };
-        return res.json(response);
+	    sReply.data.url = req.url;
+	    sReply.data.method = req.method;
+	    res.json(sReply);
     });
 
     sApp.delete("/testDelete", (req, res) => {
-        let response = {
-            "deleted": true
-        };
-        return res.json(response);
+	    sReply.data.url = req.url;
+	    sReply.data.method = req.method;
+	    res.json(sReply);
     });
 
     sApp.patch("/testPatch", (req, res) => {
-        let response = {
-            "patched": true
-        };
-        return res.json(response);
+	    sReply.data.url = req.url;
+	    sReply.data.method = req.method;
+	    res.json(sReply);
     });
 
     sApp.head("/testHead", (req, res) => {
-        let response = {
-            "head": true
-        };
-        return res.json(response);
+	    sReply.data.url = req.url;
+	    sReply.data.method = req.method;
+	    res.json(sReply);
     });
 
     sApp.options("/testOther", (req, res) => {
-        let response = {
-            "other": true
-        };
-        return res.json(response);
+	    sReply.data.url = req.url;
+	    sReply.data.method = req.method;
+	    res.json(sReply);
     });
 
 
